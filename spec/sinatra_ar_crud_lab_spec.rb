@@ -89,6 +89,7 @@ describe "Magazine App" do
 
     it "saves edits to an article" do
       visit "/articles/#{@article2.id}/edit"
+      save_and_open_page
       fill_in :title, :with => "Second Article!!"
       fill_in :content, :with => "this is the best article ever written"
 
