@@ -1,6 +1,7 @@
 <h1><%=@article[:title]%></h1>
 <p><%=@article[:content]%></p>
 
-<form method='delete' action='/articles/<%= @article.id %>'>
-<button type='button'> 
+<form method='post' action='/articles/<%= @article.id %>'>
+<input id="hidden" type="hidden" name="_method" value="DELETE">
+<input id='submit' type='submit' value='submit'> 
 </form>
