@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Edit!!</title>
+</head>
+
+<body>
+
+<form method="POST" action="/articles/<%= @article.id %>">
+<input id="hidden" type="hidden" name="_method" value="PATCH">
+    <h2>Edit your article</h2>
+
+    <label for="title">Title: </label>
+    <input type="text" id="title" name="article[title]" value="<%= @article.title %>">
+
+    <label for="content">Content: </label>
+    <textarea type="text" id="content" name="article[content]" value="<%= @article.content %>">
+
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>
