@@ -5,55 +5,56 @@ class ApplicationController < Sinatra::Base
 
   configure do
     set :public_folder, 'public'
-    set :views, 'app/views'
+    set :views, 'app/views/articles'
   end
     
   get '/' do
     "Welcome"
   end
        
-  get '/articles/new' do
-    @article = Article.new
-    erb :'/articles/new'
-  end
-    
   get '/articles' do
     @articles = Article.all 
-    erb :'/articles/index'
+    erb :index
+  end
+  
+  get '/articles/new' do
+    @article = Article.new
+    erb :new
   end
   
   post '/articles' do
-    new_article = Article.create(params)
-    id = new_article.id
-    redirect :"/articles/#{id}"
+    @new_article = Article.create(params)
+    # binding.pry
+    id = @new_article.id
+    redirect to "/articles/#{id}"
   end
   
-  # get '/articles/:id' do
-  #   @article = Article.find(params[:id])
-  #   id = new_article.id
-  #   erb :'/articles/show'
-  # end
+  get '/articles/:id' do
+    # binding.pry
+    @article = Article.find_by(id: params["id"])
+    erb :show
+  end
 
-  # get '/articles/:id/edit' do
-  #   @article = Article.find(params[:id])
-  #   id = new_article.id
-  #   erb :'/articles/edit'
-  # end
+  get '/articles/:id/edit' do
+    @article = Article.find_by(id: params["id"])
+    # binding.pry
+    erb :edit
+  end
 
-  # patch '/articles/:id' do
-  #   id = params["id"]
-  #   new_params = {}
-  #   @article = Article.find(id)
-  #   @article.update(params)
+  patch '/articles/:id' do
+    @article = Article.find_by(id: params["id"])
+    @article.title= (params[:title])
+    @article.content= (params[:content])
+    @article.save
 
-  #   redirect :'/articles/#{id}'
-  # end
+    redirect to "/articles/#{id}"
+  end
 
-  # delete '/articles/:id' do
-  #   Article.destroy(params[:id])
+  delete '/articles/:id' do
+    @article = Article.find_by_id(params["id"])
+    @article.delete
 
-  #   redirect :'/articles'
-  # end
-
+    redirect to '/articles'
+  end
 
 end
